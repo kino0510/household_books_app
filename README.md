@@ -1,7 +1,7 @@
 # household_books_app
-MsE課題の復習（家計簿アプリ）
+### MsE課題の復習（家計簿アプリ）
 
-# 使用技術
+## 使用技術
 
 ### フロントエンド
 <div style="display: flex; gap: 10px;">
