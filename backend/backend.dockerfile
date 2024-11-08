@@ -1,11 +1,17 @@
-FROM node:lts
+# ベースイメージ
+FROM node:18
 
-WORKDIR /usr/src/app
+# 作業ディレクトリを設定
+WORKDIR /app
 
-COPY . .
+# パッケージリストをコピー
+COPY package.json package-lock.json ./
 
+# 依存関係をインストール
 RUN npm install
 
-EXPOSE 4000
+# アプリケーションコードをコピー
+COPY . .
 
-CMD "npm" "run" "dev"
+# 開発サーバーを起動
+CMD ["npm", "run", "dev"]

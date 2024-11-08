@@ -1,17 +1,17 @@
-# Node.js lts image
-FROM node:lts
+# ベースイメージ
+FROM node:18
 
-# ワーキングディレクトリを指定
-WORKDIR /usr/src/app
+# 作業ディレクトリを設定
+WORKDIR /app
 
-# 同一ディレクトリ内のファイルを全てコピー
-COPY . .
+# パッケージリストをコピー
+COPY package.json package-lock.json ./
 
-# パッケージをインストール
+# 依存関係をインストール
 RUN npm install
 
-# 3000番ポートでリッスン
-EXPOSE 3000
+# アプリケーションコードをコピー
+COPY . .
 
-# React の起動
+# 開発サーバーを起動
 CMD ["npm", "run", "dev"]

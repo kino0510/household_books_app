@@ -1,0 +1,83 @@
+# version: "3.9"
+
+# services:
+#   frontend:
+#     image: node:18
+#     container_name: frontend
+#     working_dir: /app
+#     volumes:
+#       - ./frontend:/app
+#       - /app/node_modules
+#     ports:
+#       - "3000:3000"
+#     command: [ "npm", "run", "dev" ]
+#     environment:
+#       - NEXT_PUBLIC_API_URL=http://backend:4000
+#     depends_on:
+#       - backend
+
+#   backend:
+#     image: node:18
+#     container_name: backend
+#     working_dir: /app
+#     volumes:
+#       - ./backend:/app
+#       - /app/node_modules
+#     ports:
+#       - "4000:4000"
+#     command: [ "npm", "run", "dev" ]
+#     environment:
+#       - DATABASE_URL=postgresql://user_kiki:password@db:5432/household_db
+#     depends_on:
+#       - db
+
+#   db:
+#     image: postgres:15
+#     container_name: db
+#     ports:
+#       - "5433:5432"
+#     environment:
+#       POSTGRES_USER: user_kiki
+#       POSTGRES_PASSWORD: household_db
+#       POSTGRES_DB: household_db
+#     volumes:
+#       - pgdata:/var/lib/postgresql/data
+
+# volumes:
+#   pgdata:
+
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: frontend.dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: backend.dockerfile
+    ports:
+      - "4000:4000"
+    volumes:
+      - ./backend:/app
+    depends_on:
+      - db
+
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: household_db
+      POSTGRES_USER: user_kiki
+      POSTGRES_PASSWORD: household_db
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
